@@ -37,14 +37,11 @@ case ${KIBANA_PACKAGE} in
     ;;
 esac
 
-echo "ELASTICSEARCH_URL: $ELASTICSEARCH_URL"
-
 mkdir="mkdir -p"
 download="curl -sLO"
 extract="$tar -C $BUILD_DIR --wildcards -f"
 verify="sha1sum --check --warn"
-configure='sed -i s/^\x23\x20\(elasticsearch.url:\x20\).\{1,\}/\1"'$(echo $ELASTICSEARCH_URL | sed 's/\//\\\//g')'"/'
-
+configure='sed -i s/.*elasticsearch\.url.*$/elasticsearch.url: "'$(echo $ELASTICSEARCH_URL | sed 's/\//\\\//g')'"/'
 
 echo "-----> Installing Kibana..."
 
