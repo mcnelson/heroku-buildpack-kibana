@@ -37,6 +37,8 @@ case ${KIBANA_PACKAGE} in
     ;;
 esac
 
+echo "ELASTICSEARCH_URL: $ELASTICSEARCH_URL"
+
 mkdir="mkdir -p"
 download="curl -sLO"
 extract="$tar -C $BUILD_DIR --wildcards -f"
