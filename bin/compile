@@ -42,7 +42,6 @@ download="curl -sLO"
 extract="$tar -C $BUILD_DIR --wildcards -f"
 verify="sha1sum --check --warn"
 configure='sed -i s/.*elasticsearch\.url.*$/elasticsearch.url:\x20"'$(echo $ELASTICSEARCH_URL | sed 's/\//\\\//g')'"/'
-echo "configure is $configure"
 
 echo "-----> Installing Kibana..."
 
