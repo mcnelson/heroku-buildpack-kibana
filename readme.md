@@ -1,34 +1,16 @@
 # Heroku Buildpack for Kibana
 
-This buildpack downloads and installs Kibana into a Heroku app slug. It is a fork of [issueapp/heroku-buildpack-kibana](https://github.com/issueapp/heroku-buildpack-kibana), with some light customization for use as a one-click Heroku Button app.
-
-For a one-click deploy of Kibana on Heroku, see [omc/heroku-kibana](https://github.com/omc/heroku-kibana).
-
-## Compatibility
-
-Tested against Kibana 4.1.2.
+This buildpack downloads and installs Kibana into a Heroku app slug. It is a fork of [omc/heroku-buildpack-kibana](https://github.com/omc/heroku-buildpack-kibana), with some tweaks to the compile script to support Elasticsearch 5 / Kibana 5.
 
 ## Usage
 
-See our other repo at https://github.com/omc/heroku-kibana for a one-click deploy of Kibana on Heroku.
+    # Set this buildpack on your app
+    $ heroku buildpacks:set https://github.com/mcnelson/heroku-buildpack-kibana -a (replaceme)
 
-Or, to use as a standalone buildpack:
+    # Configure kibana.yml ES user/pass/URL
+    $ heroku config:set ELASTICSEARCH_URL=(replaceme) ELASTICSEARCH_USERNAME=(replaceme) ELASTICSEARCH_PASSWORD=(replaceme) -a (replaceme)
 
-    # Create a new project with the --buildpack option
-    $ heroku create --buildpack https://github.com/omc/heroku-buildpack-kibana
-
-    # ...Or update an existing project with heroku buildpacks:set
-    $ heroku buildpacks:set https://github.com/omc/heroku-buildpack-kibana
-
-    # Let the buildpack know where to find Kibana
-    $ heroku config:set DOWNLOAD_URL="https://download.elastic.co/kibana/kibana/kibana-4.1.2-linux-x64.tar.gz"
-
-    # Let Kibana know where to find Elasticsearch
-    $ heroku config:set ELASTICSEARCH_URL="https://kibanauser:kibanapass@host.region.bonsai.io"
-
-    # Create a Procfile to run the Kibana web server
-    $ cat Procfile
-    web: kibana --port $PORT
+    # Create a Procfile to run the Kibana web server $ echo 'web: kibana --port $PORT' > Procfile
 
     # Push the above to trigger a deploy
     $ git push heroku master
