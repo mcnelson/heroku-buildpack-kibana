@@ -42,6 +42,8 @@ download="curl -sLO"
 extract="$tar -C $BUILD_DIR --wildcards -f"
 verify="sha1sum --check --warn"
 configure='sed -i s/.*elasticsearch\.url.*$/elasticsearch.url:\x20"'$(echo $ELASTICSEARCH_URL | sed 's/\//\\\//g')'"/'
+configure_user='sed -i s/.*elasticsearch\.username.*$/elasticsearch.username:\x20"'$(echo $ELASTICSEARCH_USERNAME | sed 's/\//\\\//g')'"/'
+configure_pass='sed -i s/.*elasticsearch\.password.*$/elasticsearch.password:\x20"'$(echo $ELASTICSEARCH_PASSWORD | sed 's/\//\\\//g')'"/'
 
 echo "-----> Installing Kibana..."
 
@@ -67,6 +69,8 @@ $extract $CACHE_DIR/$KIBANA_PACKAGE
 
 echo "-----> Configuring ELASTICSEARCH_URL"
 $configure $KIBANA_DIR/config/kibana.yml
+$configure_user $KIBANA_DIR/config/kibana.yml
+$configure_pass $KIBANA_DIR/config/kibana.yml
 
 echo "Exporting PATH" | indent
 echo 'export PATH="$PATH:'${KIBANA_DIR##*/}'/bin"' > $INIT_SCRIPT
